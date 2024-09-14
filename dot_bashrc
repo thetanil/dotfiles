@@ -129,7 +129,6 @@ if [ -f "$ENV_FILE" ]; then
     source "$ENV_FILE"
 else
     echo "Error: Environment file $ENV_FILE not found!"
-    exit 1
 fi
 
 
