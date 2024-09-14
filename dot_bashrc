@@ -177,11 +177,11 @@ export PATH=$PATH:/usr/local/bin
 export PATH=$HOME/bin:$PATH
 
 alias ccd='chezmoi cd'
-alias ccp='chezmoi apply'
+alias ccp='chezmoi apply; source ~/.bashrc; '
 alias ccs='chezmoi status'
 
 cca() { chezmoi add "$@"; }
 
-cce() { chezmoi edit --apply "$@"; clr;}
+cce() { chezmoi edit --apply "$@"; }
 
 echo "sourced bashrc $(date)"
