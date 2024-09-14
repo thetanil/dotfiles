@@ -118,6 +118,21 @@ if ! shopt -oq posix; then
 fi
 export PATH="$HOME/.local/bin:$PATH"
 
+# Load environment variables from a .env file based on the hostname
+HOSTNAME=$(hostname)
+
+# Define the path to the .env file based on the hostname
+ENV_FILE=".env.$HOSTNAME"
+
+# Check if the corresponding .env file exists
+if [ -f "$ENV_FILE" ]; then
+    echo "Loading environment variables from $ENV_FILE"
+    source "$ENV_FILE"
+else
+    echo "Error: Environment file $ENV_FILE not found!"
+    exit 1
+fi
+
 
 # BEGIN ANSIBLE MANAGED BLOCK bashrc
 export CODEDIR=$HOME/code
