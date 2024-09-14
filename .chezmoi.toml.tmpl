@@ -11,7 +11,6 @@ encryption = "age"
     name = "{{ if eq .chezmoi.hostname "machine1" }}John Doe{{ else }}Jane Doe{{ end }}"
     email = "{{ if eq .chezmoi.hostname "machine1" }}john@example.com{{ else }}jane@example.com{{ end }}"
 
-
-[data.secrets]
-    password = "{{ .secrets.password }}"
+[data]
+    key = "bob"
 
