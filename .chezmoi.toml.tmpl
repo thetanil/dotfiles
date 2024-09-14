@@ -3,3 +3,6 @@ encryption = "age"
     identity = "~/.config/chezmoi/key.txt"
     recipient = "age169acmw5nd590yl8fesgxgm8l3jt5trjd0ehu4e8c3zgd08leagqqzxl0qk"
 
+  
+{{ join .chezmoi.sourceDir "encrypted_empty_dot_secrets.toml.age" | include | decrypt }}
+
