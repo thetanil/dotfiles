@@ -200,7 +200,6 @@ alias ccc='chezmoi dump-config'
 alias ccce='$EDITOR ~/.local/share/chezmoi/.chezmoi.toml.tmpl'
 
 cca() { chezmoi add "$@"; }
-
-cce() { chezmoi edit --apply "$@"; }
+cce() { chezmoi edit --apply "$@"; ccp; }
 
 echo "sourced bashrc $(date)"
