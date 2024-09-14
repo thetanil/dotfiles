@@ -179,12 +179,8 @@ export PATH=$HOME/bin:$PATH
 alias ccd='chezmoi cd'
 alias cap='chezmoi apply'
 
-ca() {
-  chezmoi add "$@";
-}
+ca() { chezmoi add "$1"; }
 
-ce() {
-  chezmoi edit "$@";
-}
+ce() { chezmoi edit "$1"; }
 
 echo "sourced bashrc $(date)"
