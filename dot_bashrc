@@ -1,4 +1,5 @@
 # ~/.bashrc: executed by bash(1) for non-login shells.
+#
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
@@ -180,6 +181,8 @@ alias ccd='chezmoi cd'
 alias ccp='chezmoi apply; source ~/.bashrc; '
 alias cci='chezmoi init --apply'
 alias ccs='chezmoi status'
+alias ccc='chezmoi dump-config'
+alias ccce='$EDITOR ~/.local/share/chezmoi/.chezmoi.toml.tmpl'
 
 cca() { chezmoi add "$@"; }
 

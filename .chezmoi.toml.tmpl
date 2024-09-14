@@ -8,6 +8,8 @@ encryption = "age"
     machine = "{{ .chezmoi.hostname }}"
 
 [git]
+    autoAdd = true
+    autoPush = true
     name = "{{ if eq .chezmoi.hostname "machine1" }}John Doe{{ else }}Jane Doe{{ end }}"
     email = "{{ if eq .chezmoi.hostname "machine1" }}john@example.com{{ else }}jane@example.com{{ end }}"
 
