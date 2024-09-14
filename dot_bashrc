@@ -121,7 +121,7 @@ export PATH="$HOME/.local/bin:$PATH"
 HOSTNAME=$(hostname)
 
 # Define the path to the .env file based on the hostname
-ENV_FILE=".env.$HOSTNAME"
+ENV_FILE="$HOME/.env.$HOSTNAME"
 
 # Check if the corresponding .env file exists
 if [ -f "$ENV_FILE" ]; then
