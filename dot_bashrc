@@ -182,6 +182,6 @@ alias ccs='chezmoi status'
 
 cca() { chezmoi add "$@"; }
 
-cce() { chezmoi edit "$@"; }
+cce() { chezmoi edit --apply "$@"; }
 
 echo "sourced bashrc $(date)"
