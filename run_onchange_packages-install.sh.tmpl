@@ -1,14 +1,12 @@
 {{ if eq .osid "linux-debian" "linux-raspbian" "linux-ubuntu" -}}
 
 {{ $packages := list
-    # "steam"
     "software-properties-common"
     "apt-transport-https"
     "dirmngr"
     "ca-certificates"
     "cmake"
     "universal-ctags"
-    # "- firefox-esr"
     "bash-completion"
     "curl"
     "fonts-powerline"
@@ -18,7 +16,6 @@
     "ncdu"
     "tmux"
     "tree"
-    # "only to set empty password to not be prompted by keyring tools"
     "seahorse"
     "python"
     "python3"
