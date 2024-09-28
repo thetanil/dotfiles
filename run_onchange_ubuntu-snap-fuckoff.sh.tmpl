@@ -1,0 +1,28 @@
+{{ if (eq .osid "linux-ubuntu") -}}
+
+#!/bin/bash
+
+# Check if snapd is installed
+if which snapd > /dev/null 2>&1; then
+  echo "Snapd is installed. Proceeding with removal."
+
+  # Remove all installed snap packages
+  echo "Removing all installed snap packages..."
+  for snap in $(snap list | awk 'NR>1 {print $1}'); do
+    sudo snap remove "$snap"
+  done
+
+  # Remove snapd
+  echo "Stopping and removing snapd..."
+  sudo systemctl stop snapd
+  sudo systemctl disable snapd
+  sudo systemctl mask snapd
+  sudo apt purge snapd -y
+  sudo apt-mark hold snapd
+
+  echo "Snapd and all its packages have been removed."
+else
+  echo "Snapd is not installed. No action needed."
+fi
+
+{{ end -}}
