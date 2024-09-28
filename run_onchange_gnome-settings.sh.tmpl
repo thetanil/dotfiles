@@ -8,15 +8,6 @@ fc-cache
 gsettings set org.gnome.desktop.peripherals.touchpad natural-scroll false
 
 gsettings set org.gnome.Terminal.Legacy.Settings default-show-menubar false
-
-gsettings set org.gnome.shell favorite-apps "[ \
-{{ if lookPath "code" -}}
-	'code_code.desktop', \
-{{ end -}}
-	'org.gnome.Terminal.desktop', \
-	'org.gnome.Nautilus.desktop' \
-]"
-
 gsettings set org.gnome.shell.extensions.ding show-home false
 gsettings set org.gnome.shell.extensions.ding show-trash false
 # gsettings set org.gnome.shell.extensions.ding show-volumes false
