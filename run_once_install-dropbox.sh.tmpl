@@ -1,0 +1,35 @@
+{{ if (eq .chezmoi.hostname "delta") -}}
+
+#!/bin/bash
+set -euo pipefail
+
+# Check if Dropbox is already installed
+if command -v dropboxd &> /dev/null; then
+    echo "## Dropbox is already installed. Exiting..."
+    exit 0
+fi
+
+# Update package index
+echo "## dropbox install updating package index..."
+sudo apt-get update
+sudo apt-get install -y wget
+
+# Download Dropbox package
+echo "## Downloading Dropbox package..."
+wget -O dropbox.deb https://www.dropbox.com/download?plat=lnx.x86_64
+
+# Install Dropbox package
+echo "## Installing Dropbox package..."
+sudo dpkg -i dropbox.deb || sudo apt-get install -f -y
+
+# Clean up
+echo "## Cleaning up..."
+rm dropbox.deb
+
+# Start Dropbox
+echo "## Starting Dropbox..."
+~/.dropbox-dist/dropboxd &
+
+echo "## Dropbox installation completed successfully."
+
+{{ end -}}
