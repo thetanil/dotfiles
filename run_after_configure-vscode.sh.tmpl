@@ -1,19 +1,16 @@
 {{ if and (eq .chezmoi.os "darwin" "linux") (not .headless) -}}
 
 {{ $extensions := list
-    "asvetliakov.vscode-neovim"
     "bierner.markdown-mermaid"
     "bpruitt-goddard.mermaid-markdown-syntax-highlighting"
     "christian-kohler.path-intellisense"
     "davidanson.vscode-markdownlint"
     "eamodio.gitlens"
-    "editorconfig.editorconfig"
     "gieson.writetimestamp"
     "github.copilot"
     "github.copilot-chat"
     "golang.go"
     "gruntfuggly.todo-tree"
-    "jinliming2.vscode-go-template"
     "jock.svg"
     "ms-azuretools.vscode-docker"
     "ms-python.isort"
@@ -26,7 +23,6 @@
     "ms-vscode.cpptools"
     "redhat.vscode-yaml"
     "stkb.rewrap"
-    "streetsidesoftware.code-spell-checker"
     "tamasfe.even-better-toml"
     "task.vscode-task"
     "timonwong.shellcheck"

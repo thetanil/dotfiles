@@ -1,11 +1,11 @@
 {{ if and (eq .chezmoi.os "darwin" "linux") (not .headless) -}}
 
-{{- $cmd := "code" -}}
-{{- $pkg := printf "%s" $cmd -}}
-{{- $gpg_key_file := "microsoft.gpg" -}}
-{{- $repo_file := "vscode.list" -}}
-{{- $repo_url := "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" -}}
-{{- $key_url := "https://packages.microsoft.com/keys/microsoft.asc" -}}
+{{- $cmd := "docker" -}}
+{{- $pkg := "docker-ce docker-ce-cli containerd.io" -}}
+{{- $gpg_key_file := "docker.gpg" -}}
+{{- $repo_file := "docker.list" -}}
+{{- $repo_url := "deb [arch=amd64] https://download.docker.com/linux/ubuntu jammy stable" -}}
+{{- $key_url := "https://download.docker.com/linux/ubuntu/gpg" -}}
 
 {{ $sudo := "sudo " -}}
 {{ if eq .chezmoi.username "root" -}}
@@ -23,7 +23,7 @@ if [[ ! -f {{ $gpg_key_path }} ]]; then
     # Update package lists
     {{ $sudo }}apt update
     # Install necessary dependencies
-    {{ $sudo }}apt install -y software-properties-common apt-transport-https curl
+    {{ $sudo }}apt install -y apt-transport-https ca-certificates curl gnupg lsb-release
 
     echo "## Adding {{ $gpg_key_file }} GPG key..."
     curl -fsSL {{ $key_url }} | gpg --dearmor > {{ $gpg_key_file }}
@@ -51,5 +51,8 @@ else
 fi
 
 # Output success message
+{{ $sudo }}systemctl start docker
+{{ $sudo }}systemctl enable docker
+{{ $cmd }} --version
 echo "## {{ $pkg }} installation or update is complete!"
 {{ end -}}
