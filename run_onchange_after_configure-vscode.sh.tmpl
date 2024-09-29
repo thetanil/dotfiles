@@ -33,11 +33,15 @@
     "yzhang.markdown-all-in-one" -}}
 
 #!/bin/bash
-
 set -eufo pipefail
 
 {{ range $extensions -}}
-code --force --install-extension {{ . }}
+if ! echo "$installed_extensions" | grep -q {{ . }}; then
+    echo "Installing {{ . }}..."
+    code --force --install-extension {{ . }}
+else
+    echo "{{ . }} is already installed."
+fi
 {{ end -}}
 
 {{ end -}}
