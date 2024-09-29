@@ -11,8 +11,8 @@
 {{   $sudo = "" -}}
 {{ end -}}
 
-{{ $gpg_key_path := "/etc/apt/trusted.gpg.d/{{ $gpg_key_file }}" -}}
-{{ $repo_path := "/etc/apt/sources.list.d/{{ $repo_file }}" -}}
+{{- $gpg_key_path := printf "/etc/apt/trusted.gpg.d/%s" $gpg_key_file -}}
+{{- $repo_path := printf "/etc/apt/sources.list.d/%s" $repo_file -}}
 
 #!/bin/bash
 
