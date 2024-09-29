@@ -1,22 +1,18 @@
 {{ if and (eq .chezmoi.os "darwin" "linux") (not .headless) -}}
-#!/bin/bash
-set -eufo pipefail
 
-installed_extensions=$(code --list-extensions)
-
-extensions=(
+{{ $extensions := list
     "asvetliakov.vscode-neovim"
     "bierner.markdown-mermaid"
     "bpruitt-goddard.mermaid-markdown-syntax-highlighting"
     "christian-kohler.path-intellisense"
-    "DavidAnson.vscode-markdownlint"
+    "davidanson.vscode-markdownlint"
     "eamodio.gitlens"
-    "EditorConfig.EditorConfig"
-    "gieson.writeTimestamp"
-    "GitHub.copilot"
-    "GitHub.copilot-chat"
+    "editorconfig.editorconfig"
+    "gieson.writetimestamp"
+    "github.copilot"
+    "github.copilot-chat"
     "golang.go"
-    "Gruntfuggly.todo-tree"
+    "gruntfuggly.todo-tree"
     "jinliming2.vscode-go-template"
     "jock.svg"
     "ms-azuretools.vscode-docker"
@@ -34,18 +30,22 @@ extensions=(
     "tamasfe.even-better-toml"
     "task.vscode-task"
     "timonwong.shellcheck"
-    "Tyriar.sort-lines"
+    "tyriar.sort-lines"
     "vscodevim.vim"
-    "yzhang.markdown-all-in-one"
-)
+    "yzhang.markdown-all-in-one" -}}
 
-for extension in "${extensions[@]}"; do
-    if ! echo "$installed_extensions" | grep -qF "$extension"; then
-        echo "## Installing $extension..."
-        code --force --install-extension "$extension"
-    else
-        echo "## $extension is already installed."
-    fi
-done
+#!/bin/bash
+set -eufo pipefail
+
+installed_extensions=$(code --list-extensions)
+
+{{ range $extensions -}}
+if ! echo "$installed_extensions" | grep -qF "{{ . }}"; then
+    echo "## Installing {{ . }}..."
+    code --force --install-extension {{ . }}
+else
+    echo "## {{ . }} is already installed."
+fi
+{{ end -}}
 
 {{ end -}}
