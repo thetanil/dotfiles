@@ -40,7 +40,7 @@ set -eufo pipefail
 installed_extensions=$(code --list-extensions)
 
 {{ range $extensions -}}
-if ! echo "$installed_extensions" | grep -qF {{ . }}; then
+if ! echo "$installed_extensions" | grep -qF "{{ . }}"; then
     echo "## Installing {{ . }}..."
     code --force --install-extension {{ . }}
 else
