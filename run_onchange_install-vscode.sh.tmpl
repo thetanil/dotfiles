@@ -17,11 +17,10 @@
 
 #!/bin/bash
 
-# Update package lists
-{{ $sudo }}apt update
-
 # Add the GPG key if it doesn't already exist
 if [[ ! -f {{ $gpg_key_path }} ]]; then
+    # Update package lists
+    {{ $sudo }}apt update
     # Install necessary dependencies
     {{ $sudo }}apt install -y software-properties-common apt-transport-https curl
 
@@ -37,6 +36,7 @@ fi
 if [[ ! -f {{ $repo_path }} ]]; then
     echo "## Adding the {{ $cmd }} repository..."
     {{ $sudo }}sh -c "echo \"{{ $repo_url }}\" > {{ $repo_path }}"
+    {{ $sudo }}apt update
 else
     echo "## {{ $repo_file }} repository already exists. Skipping..."
 fi
@@ -46,8 +46,6 @@ if command -v {{ $cmd }} &> /dev/null; then
     echo "## {{ $cmd }} is already installed. Updating..."
     {{ $sudo }}apt upgrade -y {{ $pkg }}
 else
-    # Update the package list again and install {{ $pkg }}
-    {{ $sudo }}apt update
     {{ $sudo }}apt install -y {{ $pkg }}
 fi
 
