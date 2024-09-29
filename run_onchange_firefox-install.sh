@@ -11,20 +11,20 @@ is_firefox_esr_installed() {
 }
 
 # Update package list
-echo "Updating package list..."
+echo "## firefox-esr updating package list..."
 sudo apt update
 
 # Install prerequisites for adding a PPA
-echo "Installing prerequisites..."
+echo "## Installing prerequisites..."
 sudo apt install -y software-properties-common
 
 # Check if the Mozilla PPA is already added
 PPA="ppa:mozillateam/ppa"
 if is_ppa_installed "$PPA"; then
-    echo "Mozilla PPA is already added."
+    echo "## Mozilla PPA is already added."
 else
     # Add the PPA for Firefox ESR
-    echo "Adding Firefox ESR PPA..."
+    echo "## Adding Firefox ESR PPA..."
     sudo add-apt-repository -y "$PPA"
 
     # Pin the Firefox ESR package to give it priority
@@ -37,19 +37,19 @@ Pin-Priority: 1001
 fi
 
 # Update package list again after adding PPA
-echo "Updating package list..."
+echo "## Updating package list..."
 sudo apt update
 
 # Check if Firefox ESR is already installed
 if is_firefox_esr_installed; then
-    echo "Firefox ESR is already installed. Updating it..."
+    echo "## Firefox ESR is already installed. Updating it..."
     sudo apt upgrade -y firefox-esr
 else
     # Install Firefox ESR
-    echo "Installing Firefox ESR..."
+    echo "## Installing Firefox ESR..."
     sudo apt install -y firefox-esr
 fi
 
 # Confirm installation or update
-echo "Firefox ESR installation/update complete!"
+echo "## Firefox ESR installation/update complete!"
 firefox-esr --version

@@ -41,10 +41,10 @@ installed_extensions=$(code --list-extensions)
 
 {{ range $extensions -}}
 if ! echo "$installed_extensions" | grep -q {{ . }}; then
-    echo "Installing {{ . }}..."
+    echo "## Installing {{ . }}..."
     code --force --install-extension {{ . }}
 else
-    echo "{{ . }} is already installed."
+    echo "## {{ . }} is already installed."
 fi
 {{ end -}}
 
