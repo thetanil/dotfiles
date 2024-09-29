@@ -11,8 +11,9 @@
 {{   $sudo = "" -}}
 {{ end -}}
 
-{{- $gpg_key_path := "/etc/apt/trusted.gpg.d/{{ $gpg_key_file }}" -}}
-{{- $repo_path := "/etc/apt/sources.list.d/{{ $repo_file }}" -}}
+{{ $gpg_key_path := "/etc/apt/trusted.gpg.d/{{ $gpg_key_file }}" -}}
+{{ $repo_path := "/etc/apt/sources.list.d/{{ $repo_file }}" -}}
+
 #!/bin/bash
 
 # Check if {{ $pkg }} command exists
