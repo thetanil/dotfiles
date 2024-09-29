@@ -18,6 +18,11 @@
 #!/bin/bash
 set -euo pipefail
 
+# remove old docker
+for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc; do
+    {{ $sudo }}apt-get remove -y $pkg || true
+done
+
 # Add the GPG key if it doesn't already exist
 if [[ ! -f {{ $gpg_key_path }} ]]; then
     # Update package lists
