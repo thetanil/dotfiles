@@ -1,6 +1,10 @@
 {{ if and (eq .chezmoi.os "darwin" "linux") (not .headless) -}}
+#!/bin/bash
+set -eufo pipefail
 
-{{ $extensions := list
+installed_extensions=$(code --list-extensions)
+
+extensions=(
     "asvetliakov.vscode-neovim"
     "bierner.markdown-mermaid"
     "bpruitt-goddard.mermaid-markdown-syntax-highlighting"
@@ -32,20 +36,16 @@
     "timonwong.shellcheck"
     "Tyriar.sort-lines"
     "vscodevim.vim"
-    "yzhang.markdown-all-in-one" -}}
+    "yzhang.markdown-all-in-one"
+)
 
-#!/bin/bash
-set -eufo pipefail
-
-installed_extensions=$(code --list-extensions)
-
-{{ range $extensions -}}
-if ! echo "$installed_extensions" | grep -qF "{{ . }}"; then
-    echo "## Installing {{ . }}..."
-    code --force --install-extension {{ . }}
-else
-    echo "## {{ . }} is already installed."
-fi
-{{ end -}}
+for extension in "${extensions[@]}"; do
+    if ! echo "$installed_extensions" | grep -qF "$extension"; then
+        echo "## Installing $extension..."
+        code --force --install-extension "$extension"
+    else
+        echo "## $extension is already installed."
+    fi
+done
 
 {{ end -}}
