@@ -35,6 +35,8 @@
 #!/bin/bash
 set -eufo pipefail
 
+installed_extensions=$(code --list-extensions)
+
 {{ range $extensions -}}
 if ! echo "$installed_extensions" | grep -q {{ . }}; then
     echo "Installing {{ . }}..."
