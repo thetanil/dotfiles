@@ -2,6 +2,7 @@
 #!/bin/bash
 set -eufo pipefail
 
-sudo apt autoremove
+echo "## autoremove after"
+sudo apt autoremove -y
 
 {{ end -}}
