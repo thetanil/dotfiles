@@ -2,7 +2,9 @@
 #!/bin/bash
 set -eufo pipefail
 
-sudo rm /etc/update-motd.d/88-esm-announce
+sudo rm /etc/apt/apt.conf.d/20apt-esm-hook.conf
+sudo touch /etc/apt/apt.conf.d/20apt-esm-hook.conf
 sudo systemctl disable ubuntu-advantage
+sudo apt-get --assume-yes --purge remove ubuntu-advantage-tools
 
 {{ end -}}
