@@ -26,10 +26,5 @@ sudo dpkg -i dropbox.deb || sudo apt-get install -f -y
 echo "## Cleaning up..."
 rm dropbox.deb
 
-# Start Dropbox
-echo "## Starting Dropbox..."
-~/.dropbox-dist/dropboxd &
-
 echo "## Dropbox installation completed successfully."
-
 {{ end -}}
