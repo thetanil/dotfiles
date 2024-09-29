@@ -1,0 +1,8 @@
+{{ if (eq .osid "linux-ubuntu") -}}
+#!/bin/bash
+set -eufo pipefail
+
+sudo rm /etc/update-motd.d/88-esm-announce
+sudo systemctl disable ubuntu-advantage
+
+{{ end -}}
