@@ -25,7 +25,7 @@ if [[ ! -f {{ $gpg_key_path }} ]]; then
     {{ $sudo }}apt install -y software-properties-common apt-transport-https curl
 
     echo "## Adding {{ $gpg_key_file }} GPG key..."
-    curl -sSL $KEY_URL | gpg --dearmor > {{ $gpg_key_file }}
+    curl -sSL {{ $key_url }} | gpg --dearmor > {{ $gpg_key_file }}
     {{ $sudo }}install -o root -g root -m 644 {{ $gpg_key_file }} {{ $gpg_key_path }}
     rm {{ $gpg_key_file }}
 else
