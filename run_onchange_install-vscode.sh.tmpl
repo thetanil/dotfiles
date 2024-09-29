@@ -1,0 +1,55 @@
+{{ if and (eq .chezmoi.os "darwin" "linux") (not .headless) -}}
+{{- $cmd := "code" -}}
+{{- $pkg := "{{ $cmd }}" -}}
+{{- $gpg_key_file := "microsoft.gpg" -}}
+{{- $repo_file := "vscode.list" -}}
+{{- $repo_url := "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" -}}
+{{- $key_url := "https://packages.microsoft.com/keys/microsoft.asc" -}}
+
+{{ $sudo := "sudo " -}}
+{{ if eq .chezmoi.username "root" -}}
+{{   $sudo = "" -}}
+{{ end -}}
+
+{{- $gpg_key_path := "/etc/apt/trusted.gpg.d/{{ $gpg_key_file }}" -}}
+{{- $repo_path := "/etc/apt/sources.list.d/{{ $repo_file }}" -}}
+#!/bin/bash
+
+# Check if {{ $pkg }} command exists
+if command -v {{ $cmd }} &> /dev/null; then
+    echo "## {{ $cmd }} is already installed. Updating..."
+    {{ $sudo }}apt upgrade -y {{ $pkg }}
+else
+    echo "## {{ $cmd }} is not installed. Proceeding with installation..."
+
+    # Update package lists
+    {{ $sudo }}apt update
+    # Install necessary dependencies
+    {{ $sudo }}apt install -y software-properties-common apt-transport-https curl
+
+    # Add the GPG key if it doesn't already exist
+    if [[ ! -f {{ $gpg_key_path }} ]]; then
+        echo "## Adding {{ $gpg_key_file }} GPG key..."
+        curl -sSL $KEY_URL | gpg --dearmor > {{ $gpg_key_file }}
+        {{ $sudo }}install -o root -g root -m 644 {{ $gpg_key_file }} {{ $gpg_key_path }}
+        rm {{ $gpg_key_file }}
+    else
+        echo "## GPG key {{ $gpg_key_file }} already exists. Skipping..."
+    fi
+
+    # Add the VS Code repository if it doesn't already exist
+    if [[ ! -f {{ $repo_path }} ]]; then
+        echo "## Adding the {{ $cmd }} repository..."
+        {{ $sudo }}sh -c "echo \"{{ $repo_url }}\" > {{ $repo_path }}"
+    else
+        echo "## {{ $repo_file }} repository already exists. Skipping..."
+    fi
+
+    # Update the package list again and install {{ $pkg }}
+    {{ $sudo }}apt update
+    {{ $sudo }}apt install -y {{ $pkg }}
+fi
+
+# Output success message
+echo "## {{ $pkg }} installation or update is complete!"
+{{ end -}}
