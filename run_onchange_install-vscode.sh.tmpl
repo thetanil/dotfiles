@@ -20,34 +20,32 @@
 # Update package lists
 {{ $sudo }}apt update
 
+# Add the GPG key if it doesn't already exist
+if [[ ! -f {{ $gpg_key_path }} ]]; then
+    # Install necessary dependencies
+    {{ $sudo }}apt install -y software-properties-common apt-transport-https curl
+
+    echo "## Adding {{ $gpg_key_file }} GPG key..."
+    curl -sSL $KEY_URL | gpg --dearmor > {{ $gpg_key_file }}
+    {{ $sudo }}install -o root -g root -m 644 {{ $gpg_key_file }} {{ $gpg_key_path }}
+    rm {{ $gpg_key_file }}
+else
+    echo "## GPG key {{ $gpg_key_file }} already exists. Skipping..."
+fi
+
+# Add the VS Code repository if it doesn't already exist
+if [[ ! -f {{ $repo_path }} ]]; then
+    echo "## Adding the {{ $cmd }} repository..."
+    {{ $sudo }}sh -c "echo \"{{ $repo_url }}\" > {{ $repo_path }}"
+else
+    echo "## {{ $repo_file }} repository already exists. Skipping..."
+fi
+
 # Check if {{ $pkg }} command exists
 if command -v {{ $cmd }} &> /dev/null; then
     echo "## {{ $cmd }} is already installed. Updating..."
     {{ $sudo }}apt upgrade -y {{ $pkg }}
 else
-    echo "## {{ $cmd }} is not installed. Proceeding with installation..."
-
-    # Install necessary dependencies
-    {{ $sudo }}apt install -y software-properties-common apt-transport-https curl
-
-    # Add the GPG key if it doesn't already exist
-    if [[ ! -f {{ $gpg_key_path }} ]]; then
-        echo "## Adding {{ $gpg_key_file }} GPG key..."
-        curl -sSL $KEY_URL | gpg --dearmor > {{ $gpg_key_file }}
-        {{ $sudo }}install -o root -g root -m 644 {{ $gpg_key_file }} {{ $gpg_key_path }}
-        rm {{ $gpg_key_file }}
-    else
-        echo "## GPG key {{ $gpg_key_file }} already exists. Skipping..."
-    fi
-
-    # Add the VS Code repository if it doesn't already exist
-    if [[ ! -f {{ $repo_path }} ]]; then
-        echo "## Adding the {{ $cmd }} repository..."
-        {{ $sudo }}sh -c "echo \"{{ $repo_url }}\" > {{ $repo_path }}"
-    else
-        echo "## {{ $repo_file }} repository already exists. Skipping..."
-    fi
-
     # Update the package list again and install {{ $pkg }}
     {{ $sudo }}apt update
     {{ $sudo }}apt install -y {{ $pkg }}
