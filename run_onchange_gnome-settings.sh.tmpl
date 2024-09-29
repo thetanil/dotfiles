@@ -6,6 +6,7 @@ set -eufo pipefail
 fc-cache
 
 gsettings set org.gnome.desktop.peripherals.touchpad natural-scroll false
+gsettings set org.gnome.desktop.input-sources xkb-options "['caps:escape']"
 
 gsettings set org.gnome.Terminal.Legacy.Settings default-show-menubar false
 gsettings set org.gnome.shell.extensions.ding show-home false
